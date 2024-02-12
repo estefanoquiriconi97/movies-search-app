@@ -5,15 +5,18 @@ const urlImg = "https://image.tmdb.org/t/p/w200";
 document.getElementById("searchButton").addEventListener("click", searchMovies);
 let resultContainer = document.getElementById("results");
 
-function searchMovies() {
+async function searchMovies() {
   resultContainer.innerHTML = "Loading ...";
 
   const searchInput = document.getElementById("searchInput").value;
 
-  fetch(`${urlBase}?&query=${searchInput}&api_key=${api_key}`)
-    .then((response) => response.json())
-    .then((response) => displayMovies(response.results));
+  const data = await fetch(
+    `${urlBase}?&query=${searchInput}&api_key=${api_key}`
+  ).then(response => response.json());
+  
+  displayMovies(data.results);
 }
+
 
 function displayMovies(movies) {
   resultContainer.innerHTML = "";
